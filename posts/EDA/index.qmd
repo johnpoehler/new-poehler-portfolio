@@ -1,0 +1,32 @@
+---
+title: "Loading, Cleaning, and Wrangling the Data"
+
+author: "John Poehler"
+
+date: "2023-08-17"
+
+image: "Data-Cleaning-scaled.jpeg"
+---
+
+# **First, the load the data!**
+
+```{r}
+library(dplyr)
+NBA<-read.csv("nbastatz1.csv",header=TRUE)
+
+```
+
+# **Next, it's time to clean and wrangle the data.**
+
+```{r, }
+NBA[NBA==""]<-NA
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "G-F","G")
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "F-G","F")
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "C-F","C")
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "F-C","F")
+NBA$Player[NBA$Player == "Jos\xe9 Calder\xf3n"]<- "Jose Calderon"
+NBA$Player[NBA$Player == "Manu Gin\xf3bili"]<- "Manu Ginobili"
+NBA$Player[NBA$Player == "Hedo T\xfcrko?lu"]<- "Hedo Turkoglu"
+NBA$Player[NBA$Player == "Nen\xea"]<- "Nene"
+
+```

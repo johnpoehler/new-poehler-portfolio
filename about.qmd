@@ -1,0 +1,20 @@
+---
+title: "John Poehler"
+image: IMG_0486.jpeg
+about: 
+  template: jolla
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/johnpoehler
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/john-poehler-308049289
+    - icon: Tableau
+      text: Tableau
+      href: https://public.tableau.com/app/profile/john.poehler
+---
+
+Hello, my name is John Poehler and this is my R portfolio.
+
+I have recently graduated UNT with a M.S. in advanced Data Analytics and this site will help me showcase my programming abilities in R by way of my Capstone Project named: "Exploring the 'I' in Team: Unveiling the Influence of Individual Players on NBA Team Success".

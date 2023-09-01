@@ -1,0 +1,135 @@
+---
+title: "Modeling the Data"
+
+author: "John Poehler"
+
+date: "2023-08-19"
+
+categories: [modelling, regression]
+
+image: "regression.jpg"
+---
+
+```{r , results='hide'}
+suppressMessages(library(dplyr))
+library(dplyr)
+NBA<-read.csv("nbastatz1.csv",header=TRUE)
+
+NBA[NBA==""]<-NA
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "G-F","G")
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "F-G","F")
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "C-F","C")
+NBA$Pos <- replace(NBA$Pos,NBA$Pos == "F-C","F")
+NBA$Player[NBA$Player == "Jos\xe9 Calder\xf3n"]<- "Jose Calderon"
+NBA$Player[NBA$Player == "Manu Gin\xf3bili"]<- "Manu Ginobili"
+NBA$Player[NBA$Player == "Hedo T\xfcrko?lu"]<- "Hedo Turkoglu"
+NBA$Player[NBA$Player == "Nen\xea"]<- "Nene"
+```
+
+# Let's build and run a linear regression model!
+
+```{r, echo=TRUE}
+library(caret)
+
+win.NBA <- NBA[c('WS','Age','G','MP','FG','FGA','X2P','X2PA','X3P','X3PA','FT','FTA','ORB','DRB','TRB','AST','STL','BLK','TOV','PF','PTS','FG.','X2P.','FT.','TS.','eFG.','Win.')]
+
+set.seed(123)
+
+train_index <- createDataPartition(win.NBA$Win., p = 0.7, list = FALSE)
+train_data <- win.NBA[train_index, ]
+test_data <- win.NBA[-train_index, ]
+
+
+win.percent.regression <- lm(Win. ~ ., data = train_data)
+
+
+summary(win.percent.regression)
+```
+
+# Now, a logistic regression model!
+
+```{r,echo=TRUE}
+library(dplyr)
+library(caret)
+
+indyNBA<- NBA[c('WS','Age','G','MP','FG','FGA','X2P','X2PA','X3P','X3PA','FT','FTA','ORB','DRB','TRB','AST','STL','BLK','TOV','PF','PTS','FG.','X2P.','X3P.','FT.','TS.','eFG.','Champ.')]
+
+set.seed(123)
+
+index <- createDataPartition(indyNBA$Champ., p = 0.7, list = FALSE)
+
+train <- indyNBA[index, ]
+test <- indyNBA[-index, ]
+
+logit_model <- glm(Champ. ~ WS + MP +DRB + AST + STL +
+                   TOV ,
+                   data = train, family = binomial)
+
+summary(logit_model)
+
+test$predicted_champ <- predict(logit_model, newdata = test, type = "response")
+
+test$predicted_champ_binary <- ifelse(test$predicted_champ >= 0.5, "yes", "no")
+
+confusion_matrix <- table(test$Champ., test$predicted_champ_binary)
+print(confusion_matrix)
+
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+print(paste("Accuracy:", accuracy))
+
+
+```
+
+# **Lastly, a LASSO Regression model!**
+
+```{r, echo=TRUE}
+
+
+library(glmnet)
+library(caret)
+library(caTools)
+
+
+subsetNBA <- select(NBA, WS, Age, G, MP, FG, FGA, X2P, X2PA, X3P, X3PA, FT, FTA, ORB, DRB, TRB, AST, STL, BLK, TOV, PF, PTS, `FG.`, `X2P.`, `FT.`, `TS.`, `eFG.`)
+
+
+set.seed(345)  
+sample <- sample.split(subsetNBA$WS, SplitRatio = 0.70)
+train <- subsetNBA[sample, ]
+test <- subsetNBA[!sample, ]
+
+
+x <- as.matrix(train[, -1])  
+y <- train$WS
+
+lasso_model <- glmnet(x, y, alpha = 1)  
+
+lambda_seq <- exp(seq(log(0.01), log(1), length = 100))  
+
+
+cv_model <- cv.glmnet(x, y, alpha = 1, lambda = lambda_seq)
+
+
+opt_lambda <- cv_model$lambda.min
+
+
+cat("Optimal Lambda:", opt_lambda, "\n")
+
+
+final_model <- glmnet(x, y, alpha = 1, lambda = opt_lambda)
+
+
+x_test <- as.matrix(test[, -1])  
+y_test_pred <- predict(final_model, newx = x_test)
+
+
+
+rmse <- sqrt(mean((y_test_pred - test$WS)^2))
+cat("RMSE:", rmse, "\n")
+
+
+coef <- coef(final_model)
+print(coef)
+
+summary(final_model)
+```

@@ -1,0 +1,21 @@
+project:
+  type: website
+
+website:
+  title: "Home"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/johnpoehler
+      - icon: linkedin
+        href: https://linkedin.com/in/john-poehler-308049289
+      - icon: patch-plus
+        href: https://public.tableau.com/app/profile/john.poehler
+format:
+  html:
+    theme: pulse
+    css: styles.css
+
+editor: visual
+

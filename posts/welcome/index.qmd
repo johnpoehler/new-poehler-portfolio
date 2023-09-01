@@ -1,0 +1,10 @@
+---
+title: "Capstone Project: Exploring the 'I' in Team: Unveiling the Influence of Individual Players on NBA Team Success"
+author: "John Poehler"
+date: "2023-08-16"
+image: "untpic.jpg"
+---
+
+The following [Capstone Project](https://www.docdroid.net/AHZi9bU/adta-5940-capstone-poehler-final-pdf){target="\"blank"} was created during my final semester at UNT and was done to showcase my ability with R as a programming language as well as show my understanding of data cleaning, wrangling, visualization as well as modelling.
+
+Working with data revolving around NBA statistics, my goal was investigate the effect that individual players had on the overall success of their entire team.

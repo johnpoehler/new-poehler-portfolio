@@ -1,0 +1,14 @@
+{
+  "hash": "bc0fc0e7919f79efc4e08d5b86b48987",
+  "result": {
+    "markdown": "---\ntitle: \"Loading, Cleaning, and Wrangling the Data\"\n\nauthor: \"John Poehler\"\n\ndate: \"2023-08-17\"\n\nimage: \"Data-Cleaning-scaled.jpeg\"\n---\n\n\n# **First, the load the data!**\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(dplyr)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n\nAttaching package: 'dplyr'\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n```\n:::\n\n```{.r .cell-code}\nNBA<-read.csv(\"nbastatz1.csv\",header=TRUE)\n```\n:::\n\n\n# **Next, it's time to clean and wrangle the data.**\n\n\n::: {.cell}\n\n```{.r .cell-code}\nNBA[NBA==\"\"]<-NA\nNBA$Pos <- replace(NBA$Pos,NBA$Pos == \"G-F\",\"G\")\nNBA$Pos <- replace(NBA$Pos,NBA$Pos == \"F-G\",\"F\")\nNBA$Pos <- replace(NBA$Pos,NBA$Pos == \"C-F\",\"C\")\nNBA$Pos <- replace(NBA$Pos,NBA$Pos == \"F-C\",\"F\")\nNBA$Player[NBA$Player == \"Jos\\xe9 Calder\\xf3n\"]<- \"Jose Calderon\"\nNBA$Player[NBA$Player == \"Manu Gin\\xf3bili\"]<- \"Manu Ginobili\"\nNBA$Player[NBA$Player == \"Hedo T\\xfcrko?lu\"]<- \"Hedo Turkoglu\"\nNBA$Player[NBA$Player == \"Nen\\xea\"]<- \"Nene\"\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

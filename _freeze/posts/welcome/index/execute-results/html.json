@@ -1,0 +1,14 @@
+{
+  "hash": "06b3fea3142828733a0bcb26364d754d",
+  "result": {
+    "markdown": "---\ntitle: \"Capstone Project: Exploring the 'I' in Team: Unveiling the Influence of Individual Players on NBA Team Success\"\nauthor: \"John Poehler\"\ndate: \"2023-04-25\"\nimage: \"untpic.jpg\"\n---\n\n::: {.cell}\n\n:::\n\n\nThe following \\[[Capstone Project](https://www.docdroid.net/AHZi9bU/adta-5940-capstone-poehler-final-pdf){target=\"\\\"blank\"}\\] was created during my final semester at UNT and was done to showcase my ability with R as a programming language as well as show my understanding of data cleaning, wrangling, visualization as well as modelling.\n\nWorking with data revolving around NBA statistics, my goal was investigate the effect that individual players had on the overall success of their entire team.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
